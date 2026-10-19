@@ -127,8 +127,8 @@ Hệ thống được chia làm 3 phân hệ chính với các chức năng nghi
 
 ```bash
 # 1. Clone repository về máy
-git clone https://github.com/Phuc1810/DoanLVTN.git
-cd DoanLVTN
+git clone https://github.com/Phuc1810/ota-tour-booking-system.git
+cd ota-tour-booking-system
 
 # 2. Khởi chạy toàn bộ hệ sinh thái (MySQL, Backend, Frontend)
 docker compose up -d --build
@@ -271,4 +271,4 @@ SEPAY_WEBHOOK_TOKEN_OUT="your_refund_token"
 - **Tác giả:** Phuc1810
 - **Email:** [tranhoaiphuc1810@gmail.com](mailto:tranhoaiphuc1810@gmail.com)
 - **LinkedIn:** [Trần Hoài Phúc](https://www.linkedin.com/in/ph%C3%BAc-tr%E1%BA%A7n-ho%C3%A0i-97807b313/)
-- **Repository:** [https://github.com/Phuc1810/DoanLVTN](https://github.com/Phuc1810/DoanLVTN)
+- **Repository:** [https://github.com/Phuc1810/ota-tour-booking-system](https://github.com/Phuc1810/ota-tour-booking-system)
