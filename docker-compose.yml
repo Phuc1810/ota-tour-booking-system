@@ -1,0 +1,71 @@
+services:
+  # 1. Dịch vụ Database MySQL
+  mysql:
+    image: mysql:8.0
+    container_name: lvtn_mysql
+    restart: always
+    environment:
+      MYSQL_DATABASE: lvtn_tour
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - lvtn_network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-u", "root", "-proot"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # 2. Dịch vụ Backend (Laravel)
+  backend:
+    build:
+      context: ./Backend
+      dockerfile: Dockerfile
+    container_name: lvtn_backend
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      DB_HOST: mysql
+      DB_PORT: 3306
+      DB_DATABASE: lvtn_tour
+      DB_USERNAME: root
+      DB_PASSWORD: root
+    depends_on:
+      mysql:
+        condition: service_healthy
+    volumes:
+      - ./Backend:/var/www
+      - /var/www/vendor
+    networks:
+      - lvtn_network
+
+  # 3. Dịch vụ Frontend (ReactJS)
+  frontend:
+    build:
+      context: ./Frontend
+      dockerfile: Dockerfile
+    container_name: lvtn_frontend
+    restart: always
+    ports:
+      - "5173:5173"
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    volumes:
+      - ./Frontend:/app
+      - /app/node_modules
+    depends_on:
+      - backend
+    networks:
+      - lvtn_network
+
+volumes:
+  mysql_data:
+    driver: local
+
+networks:
+  lvtn_network:
+    driver: bridge
